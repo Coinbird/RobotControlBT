@@ -11,12 +11,15 @@ void setup()
   pinMode(LED_PIN, OUTPUT);
   Serial.begin(38400);
   Serial.println("Robot motion control initialized.");
-  Serial1.begin(9600);  // HC-05 default speed in AT command more
+  
+  // TODO: increase Serial1 comm rate for speed via AT command to HC-05
+  Serial1.begin(9600);  // HC-05 default speed
+  
   state = RobotState::Fault;
   prevCmdMillis = millis();
 
-  //motors.flipM1(true);
-  motors.flipM2(true);
+  motors.flipM1(true);
+//  motors.flipM2(true);
 }
 
 void gotCmd() {
@@ -57,6 +60,9 @@ void handleStateLoop() {
   switch(state) {
     case RobotState::Forward:
       driveForward();
+      break;
+    case RobotState::Back:
+      driveBack();
       break;
     case RobotState::Stopped:
       stopRobot();

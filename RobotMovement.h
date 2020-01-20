@@ -43,23 +43,37 @@ void driveForward() {
   motors.setM2Speed(currentRobotSpeed[1]);
   delay(2);
   stopIfFault();
-
 }
 
-void stopRobot() {
-  currentRobotSpeed[0] = 0;
-  currentRobotSpeed[1] = 0;
+void driveBack() {
+  currentRobotSpeed[0] = constrain(currentRobotSpeed[0]--, -MAX_SPEED, MAX_SPEED);
+  currentRobotSpeed[1] = constrain(currentRobotSpeed[1]--, -MAX_SPEED, MAX_SPEED);
+//  Serial.print("Spd: ");
+//  Serial.println(currentRobotSpeed[0]);
+//  Serial.println(currentRobotSpeed[1]);
   motors.setM1Speed(currentRobotSpeed[0]);
   motors.setM2Speed(currentRobotSpeed[1]);
+  delay(2);
+  stopIfFault();
+}
+
+
+void stopRobot() {
+
+  for (int motorIdx = 0; motorIdx < 2; motorIdx++) {
+    if (currentRobotSpeed[motorIdx] > 0) {
+      currentRobotSpeed[motorIdx] = constrain(currentRobotSpeed[motorIdx] -= 1, 0, MAX_SPEED);  
+    } else {
+      currentRobotSpeed[motorIdx] = constrain(currentRobotSpeed[motorIdx] += 1, -MAX_SPEED, 0);      
+    }
+  }
+  motors.setM1Speed(currentRobotSpeed[0]);
+  motors.setM2Speed(currentRobotSpeed[1]);
+  delay(2);
   stopIfFault();
 
-//  if (currentRobotSpeed[0] > 0) {
-//    currentRobotSpeed -= 2;    
 //    Serial.print("Spd: ");
 //    Serial.println(currentRobotSpeed);
-//  } else {
-//   currentRobotSpeed = 0;   
-//  }
 }
 
 void emergencyStop() {
