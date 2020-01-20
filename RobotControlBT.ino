@@ -72,7 +72,16 @@ void handleStateLoop() {
 
 void loop()
 {
-   motors.enableDrivers();
+  // Single-char Commands, sent at high rate from the BT application:
+  // S: stop (default state)
+  // R, L, F, B: right, left, forward, back
+  // G, I, H, J: FL, FR, BL, BR
+  // Single Commands:
+  // D: bluetooth disconnecting now
+  // TODO: others
+
+  motors.enableDrivers();
+  
   // Keep reading from HC-05 and send to Arduino Serial Monitor
   Serial1.flush();
   if (Serial1.available()) {
