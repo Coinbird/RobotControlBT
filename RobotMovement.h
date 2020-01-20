@@ -33,28 +33,43 @@ void stopIfFault()
   }
 }
 
-void driveForward() {
-  currentRobotSpeed[0] = constrain(currentRobotSpeed[0]++, -MAX_SPEED, MAX_SPEED);
-  currentRobotSpeed[1] = constrain(currentRobotSpeed[1]++, -MAX_SPEED, MAX_SPEED);
+void driveStraight(boolean isForward) {
+  int driveDir = isForward ? 1 : -1;
+  currentRobotSpeed[0] = constrain(currentRobotSpeed[0] + driveDir, -MAX_SPEED, MAX_SPEED);
+  currentRobotSpeed[1] = constrain(currentRobotSpeed[1] + driveDir, -MAX_SPEED, MAX_SPEED);
 //  Serial.print("Spd: ");
 //  Serial.println(currentRobotSpeed[0]);
 //  Serial.println(currentRobotSpeed[1]);
-  motors.setM1Speed(currentRobotSpeed[0]);
-  motors.setM2Speed(currentRobotSpeed[1]);
-  delay(2);
+  motors.setSpeeds(currentRobotSpeed[0],currentRobotSpeed[1]);
+  delay(4);
   stopIfFault();
 }
 
-void driveBack() {
-  currentRobotSpeed[0] = constrain(currentRobotSpeed[0]--, -MAX_SPEED, MAX_SPEED);
-  currentRobotSpeed[1] = constrain(currentRobotSpeed[1]--, -MAX_SPEED, MAX_SPEED);
-//  Serial.print("Spd: ");
-//  Serial.println(currentRobotSpeed[0]);
-//  Serial.println(currentRobotSpeed[1]);
-  motors.setM1Speed(currentRobotSpeed[0]);
-  motors.setM2Speed(currentRobotSpeed[1]);
+void turnInPlace(boolean isTurnLeft) {
+  int turnVal = isTurnLeft ? -1 : 1;
+  currentRobotSpeed[0] = constrain(currentRobotSpeed[0] + turnVal, -MAX_SPEED, MAX_SPEED);
+  currentRobotSpeed[1] = constrain(currentRobotSpeed[1] - turnVal, -MAX_SPEED, MAX_SPEED);
+  motors.setSpeeds(currentRobotSpeed[0],currentRobotSpeed[1]);
   delay(2);
-  stopIfFault();
+  stopIfFault();  
+}
+
+void turnAndRotate(boolean isForward, boolean isTurnLeft) {
+  // FL 200 400  
+  // FR 400 200
+  // BL -200 -400
+  // BR -400 -200
+  int driveDir = isForward ? 1 : -1;
+  if (isTurnLeft) {
+    currentRobotSpeed[0] = constrain(currentRobotSpeed[0] + (driveDir * 1), -MAX_SPEED / 2, MAX_SPEED / 2);
+    currentRobotSpeed[1] = constrain(currentRobotSpeed[1] + (driveDir * 2), -MAX_SPEED, MAX_SPEED);
+  } else {
+    currentRobotSpeed[0] = constrain(currentRobotSpeed[0] + (driveDir * 2), -MAX_SPEED, MAX_SPEED);
+    currentRobotSpeed[1] = constrain(currentRobotSpeed[1] + (driveDir * 1), -MAX_SPEED / 2, MAX_SPEED / 2);
+  }
+  motors.setSpeeds(currentRobotSpeed[0],currentRobotSpeed[1]);
+  delay(2);
+  stopIfFault();  
 }
 
 
@@ -67,8 +82,7 @@ void stopRobot() {
       currentRobotSpeed[motorIdx] = constrain(currentRobotSpeed[motorIdx] += 1, -MAX_SPEED, 0);      
     }
   }
-  motors.setM1Speed(currentRobotSpeed[0]);
-  motors.setM2Speed(currentRobotSpeed[1]);
+  motors.setSpeeds(currentRobotSpeed[0],currentRobotSpeed[1]);
   delay(2);
   stopIfFault();
 
@@ -79,7 +93,6 @@ void stopRobot() {
 void emergencyStop() {
   currentRobotSpeed[0] = 0;
   currentRobotSpeed[1] = 0;
-  motors.setM1Speed(0);
-  motors.setM2Speed(0);
+  motors.setSpeeds(0, 0);
   stopIfFault();
 }

@@ -39,10 +39,14 @@ void changeState(RobotState newState) {
 void handleEnterState(RobotState newState) {
   switch(newState) {
     case RobotState::Forward:
-      Serial.println("F");
-      break;
     case RobotState::Back:
-      Serial.println("B");
+    case RobotState::TurnLeft:
+    case RobotState::TurnRight:
+    case RobotState::ForwardLeft:
+    case RobotState::ForwardRight:
+    case RobotState::BackLeft:
+    case RobotState::BackRight:
+      // valid implemented motions, continue
       break;
     case RobotState::Stopped:
       Serial.println("Slow/STOP");
@@ -59,10 +63,28 @@ void handleStateLoop() {
   // In a state, perform updates
   switch(state) {
     case RobotState::Forward:
-      driveForward();
+      driveStraight(true);
       break;
     case RobotState::Back:
-      driveBack();
+      driveStraight(false);
+      break;
+    case RobotState::TurnLeft:
+      turnInPlace(true);
+      break;
+    case RobotState::TurnRight:
+      turnInPlace(false);
+      break;
+    case RobotState::ForwardLeft:
+      turnAndRotate(true, true);
+      break;
+    case RobotState::ForwardRight:
+      turnAndRotate(true, false);
+      break;
+    case RobotState::BackLeft:
+      turnAndRotate(false, true);
+      break;
+    case RobotState::BackRight:
+      turnAndRotate(false, false);
       break;
     case RobotState::Stopped:
       stopRobot();
