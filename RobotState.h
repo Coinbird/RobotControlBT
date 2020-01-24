@@ -10,3 +10,8 @@ enum RobotState {
   BackRight,
   BackLeft
 };
+
+//enum VisionState {
+//  VisionModeDisabled,
+//  VisionModeEnabled
+//};
