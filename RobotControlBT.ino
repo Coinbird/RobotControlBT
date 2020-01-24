@@ -48,49 +48,83 @@ void loop()
 
     gotCmd();
     char readByte = Serial1.read();
-    switch(readByte) {
-      case 'S':
-          changeState(RobotState::Stopped);
-          break;
-      case 'R':
-          changeState(RobotState::TurnRight);
-          break;
-      case 'L':
-          changeState(RobotState::TurnLeft);
-          break;
-      case 'F':
-          changeState(RobotState::Forward);
-          break;
-      case 'B':
-          changeState(RobotState::Back);
-          break;
-      case 'G':
-          changeState(RobotState::ForwardLeft);
-          break;
-      case 'I':
-          changeState(RobotState::ForwardRight);
-          break;
-      case 'H':
-          changeState(RobotState::BackLeft);
-          break;
-      case 'J':
-          changeState(RobotState::BackRight);
-          break;
-      case 'D':
-          Serial.println("Manual Disconnect received.");
-          changeState(RobotState::Fault);
-          break;
-      case 'W':
-          Serial.println("VISION MODE.");
-          isVisionModeEnabled = true;
-          break;
-      case 'w':
-          Serial.println("Vision off.");
-          isVisionModeEnabled = false;
-          break;
-      default:
-          Serial.println(readByte);
-          break;
+    if (!isVisionModeEnabled) {
+      switch(readByte) {
+        case 'S':
+            changeState(RobotState::Stopped);
+            break;
+        case 'R':
+            changeState(RobotState::TurnRight);
+            break;
+        case 'L':
+            changeState(RobotState::TurnLeft);
+            break;
+        case 'F':
+            changeState(RobotState::Forward);
+            break;
+        case 'B':
+            changeState(RobotState::Back);
+            break;
+        case 'G':
+            changeState(RobotState::ForwardLeft);
+            break;
+        case 'I':
+            changeState(RobotState::ForwardRight);
+            break;
+        case 'H':
+            changeState(RobotState::BackLeft);
+            break;
+        case 'J':
+            changeState(RobotState::BackRight);
+            break;
+        case 'D':
+            Serial.println("Manual Disconnect received.");
+            changeState(RobotState::Fault);
+            break;
+        case 'W':
+            Serial.println("VISION MODE.");
+            isVisionModeEnabled = true;
+            break;
+        default:
+            // Unhandled command - output for future addition
+            Serial.println(readByte);
+            break;
+      }
+     } else {
+        switch(curVizCmd) {
+          case VisionCommand::VisionStop: 
+             changeState(RobotState::Stopped);
+             break;
+          case VisionCommand::VisionForward: 
+             changeState(RobotState::Forward);
+             break;
+          case VisionCommand::VisionForwardLeft:
+            changeState(RobotState::ForwardLeft);
+            break;
+         case VisionCommand::VisionForwardRight:
+            changeState(RobotState::ForwardRight);
+            break;
+         case VisionCommand::VisionBack:
+            changeState(RobotState::Back);
+            break;
+        }
+        // Vision mode: still handle important stuff        
+        switch(readByte) {
+          case 'D':
+              Serial.println("Manual Disconnect received.");
+              isVisionModeEnabled = false;
+              changeState(RobotState::Fault);
+              break;
+          case 'w':
+              Serial.println("Vision off.");
+              isVisionModeEnabled = false;
+              break;
+          default:
+              // Ignore command
+//              Serial.println(readByte);
+              break;        
+        }
+        
     }
   }
 

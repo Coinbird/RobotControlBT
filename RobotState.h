@@ -50,11 +50,48 @@ void handleEnterState(RobotState newState) {
   }
 }
 
+void showState(RobotState robotState) {
+  switch(robotState) {
+    case RobotState::Fault:
+      Serial.println("Fault");
+      break;
+    case RobotState::Stopped:
+      Serial.println("Stopped");
+      break;
+    case RobotState::Forward:
+      Serial.println("Forward");
+      break;
+    case RobotState::Back:
+      Serial.println("Back");
+      break;
+    case RobotState::TurnRight:
+      Serial.println("TurnRight");
+      break;
+    case RobotState::TurnLeft:
+      Serial.println("TurnLeft");
+      break;
+    case RobotState::ForwardRight:
+      Serial.println("ForwardRight");
+      break;
+    case RobotState::ForwardLeft:
+      Serial.println("ForwardLeft");
+      break;
+    case RobotState::BackRight:
+      Serial.println("BackRight");
+      break;
+    case RobotState::BackLeft:
+      Serial.println("BackLeft");
+      break;
+    default:
+      Serial.println(robotState);
+      break;
+  }
+}
 void changeState(RobotState newState) {
   // Change state
-   if(state != newState) {
+   if(state != newState) {    
     Serial.print("Entered State =");
-    Serial.println(newState); // TODO Translate
+    showState(newState);
     handleEnterState(newState);
     state = newState;
   }
