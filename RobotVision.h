@@ -30,9 +30,9 @@ void initRobotVision() {
 
 
 
-const uint16_t MAX_BACKUP_WIDTH = 150; // if exceeded, back up
+const uint16_t MAX_BACKUP_WIDTH = 120; // if exceeded, back up
 const uint16_t MIN_STOP_WIDTH = 45; // if less than, drive forward. Increase to keep closer.
-const uint16_t DEAD_BAND = 20; // midpoint dead band
+const uint16_t DEAD_BAND = 50; // midpoint dead band
 const uint16_t MIDDLE_SCREEN = 320 / 2; // middle of screen
 
 VisionCommand recommendCommand(uint16_t width, uint16_t xPos) {
