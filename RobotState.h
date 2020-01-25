@@ -113,16 +113,16 @@ void handleStateLoop() {
       turnInPlace(false);
       break;
     case RobotState::ForwardLeft:
-      turnAndRotate(true, true);
+      driveAndTurn(true, true);
       break;
     case RobotState::ForwardRight:
-      turnAndRotate(true, false);
+      driveAndTurn(true, false);
       break;
     case RobotState::BackLeft:
-      turnAndRotate(false, true);
+      driveAndTurn(false, true);
       break;
     case RobotState::BackRight:
-      turnAndRotate(false, false);
+      driveAndTurn(false, false);
       break;
     case RobotState::Stopped:
       stopRobot();

@@ -17,6 +17,8 @@ boolean isFaulted = false;
 int currentRobotSpeed[] = {0, 0};
 const int MAX_SPEED = 400;
 
+
+
 void stopIfFault()
 {
   if (motors.getFault())
@@ -54,7 +56,7 @@ void turnInPlace(boolean isTurnLeft) {
   stopIfFault();  
 }
 
-void turnAndRotate(boolean isForward, boolean isTurnLeft) {
+void driveAndTurn(boolean isForward, boolean isTurnLeft) {
   // FL 200 400  
   // FR 400 200
   // BL -200 -400
