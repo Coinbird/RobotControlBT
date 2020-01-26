@@ -25,7 +25,7 @@ void setup()
   initRobotVision();
   Serial.println("Robot initialized.");
 
-  if (isMotorError) {
+  if (stopIfFault()) {
     state = RobotState::Error;
   }
 }
@@ -36,9 +36,10 @@ void gotCmd() {
 
 void loop()
 {  
+  curMillis = millis();
 
   motors.enableDrivers();
-  loopPixelsBlink(state);
+  loopPixelsBlink(curMillis, state);
   performVision();
     
   // Keep reading from HC-05 and send to Arduino Serial Monitor
@@ -136,9 +137,8 @@ void loop()
     }
   }
 
-  curMillis = millis();
   if (curMillis - prevCmdMillis > maxTimeoutMS && state != RobotState::Fault && state != RobotState::Error) {
-    Serial.print("Entered FAULT State, command not received in ");
+    Serial.print("Entered Fault/Stop State, command not received in ");
     Serial.print(maxTimeoutMS);
     Serial.print(" ms.");
     changeState(RobotState::Fault);
