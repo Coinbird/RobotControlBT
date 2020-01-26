@@ -1,7 +1,11 @@
+#ifndef __ROBOT_STATE_H
+#define __ROBOT_STATE_H
+
 #include "RobotMovement.h"
 
 // High level state machine for driving robot
 enum RobotState {
+  Error,
   Fault,
   Stopped,
   Forward,
@@ -129,3 +133,5 @@ void handleStateLoop() {
       break;
   }
 }
+
+#endif  // __ROBOT_STATE_H

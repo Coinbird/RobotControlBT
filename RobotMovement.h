@@ -12,26 +12,29 @@
 
 DualMAX14870MotorShield motors;
 
-boolean isFaulted = false;
+boolean isMotorError = false;
 
 int currentRobotSpeed[] = {0, 0};
 const int MAX_SPEED = 400;
 
 
 
-void stopIfFault()
+bool stopIfFault()
 {
   if (motors.getFault())
   {
     Serial.println("MOTOR CONTROL FAULT.");
-    isFaulted = true;
-    while (isFaulted)
-    {
-      digitalWrite(LED_PIN, HIGH);
-      delay(100);
-      digitalWrite(LED_PIN, LOW);
-      delay(100);
-    }
+    isMotorError = true;
+//    while (isMotorError)
+//    {
+//      digitalWrite(LED_PIN, HIGH);
+//      delay(100);
+//      digitalWrite(LED_PIN, LOW);
+//      delay(100);
+//    }
+    return false;
+  } else {
+    return true;
   }
 }
 

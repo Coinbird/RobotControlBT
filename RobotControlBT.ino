@@ -9,17 +9,25 @@ static unsigned long curMillis = 0;
 
 void setup()
 {
+
+  initRobotLEDs();
+  allLEDs(255,0,0);
   pinMode(LED_PIN, OUTPUT);
   Serial.begin(38400);
-  Serial.println("Robot motion control initialized.");
   
   // TODO: increase Serial1 comm rate for speed via AT command to HC-05
   Serial1.begin(9600);  // HC-05 default speed
-  
+
+  delay(500); // Give motor driver a sec to get started
   prevCmdMillis = millis();
 
   initRobotState();
   initRobotVision();
+  Serial.println("Robot initialized.");
+
+  if (isMotorError) {
+    state = RobotState::Error;
+  }
 }
 
 void gotCmd() {
@@ -30,7 +38,7 @@ void loop()
 {  
 
   motors.enableDrivers();
-  
+  loopPixelsBlink(state);
   performVision();
     
   // Keep reading from HC-05 and send to Arduino Serial Monitor
@@ -129,7 +137,7 @@ void loop()
   }
 
   curMillis = millis();
-  if (curMillis - prevCmdMillis > maxTimeoutMS && state != RobotState::Fault) {
+  if (curMillis - prevCmdMillis > maxTimeoutMS && state != RobotState::Fault && state != RobotState::Error) {
     Serial.print("Entered FAULT State, command not received in ");
     Serial.print(maxTimeoutMS);
     Serial.print(" ms.");
