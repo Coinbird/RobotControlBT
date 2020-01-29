@@ -12,6 +12,11 @@ Simple robotic control from Bluetooth RC Car app
   * If serial stream is lost, robot emergency stops
   * Acceleration/ Deceleration
   * TODO - integrated hall encoders for smoother PID control, odometry
-  * TODO - autonomous operation modes
-  * TODO: LED's / other sensors
+  * Pixy- camera autonomous operation mode (headlight toggle)
+  * Neopixel status and strobe effect when armed
+  
+  
+## Demo
+  * Finished robot: https://www.youtube.com/watch?v=HNtmfgkichY
+  * Vision system: https://youtu.be/W54Av2lJxBA
   
