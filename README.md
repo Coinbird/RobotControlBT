@@ -17,6 +17,6 @@ Simple robotic control from Bluetooth RC Car app
   
   
 ## Demo
-  * Finished robot: https://youtu.be/HNtmfgkichY
+  * Finished robot (carrying 100 ounce gigantic Big Gulp soda) https://youtu.be/HNtmfgkichY
   * Vision system: https://youtu.be/W54Av2lJxBA
   
