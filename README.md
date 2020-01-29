@@ -7,6 +7,8 @@ Simple robotic control from Bluetooth RC Car app
   * Arduino Due
   * Dual MAX14870 Motor Driver Shield
   * HC-05 Bluetooth Module
+  * 2x adafruit neopixel style RGB LED's
+  * Pixy Camera 
   
 ## Features
   * If serial stream is lost, robot emergency stops
