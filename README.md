@@ -17,6 +17,6 @@ Simple robotic control from Bluetooth RC Car app
   
   
 ## Demo
-  * Finished robot: https://www.youtube.com/watch?v=HNtmfgkichY
+  * Finished robot: https://youtu.be/HNtmfgkichY
   * Vision system: https://youtu.be/W54Av2lJxBA
   
