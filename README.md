@@ -1,6 +1,6 @@
 # RobotControlBT
 
-Simple robotic control from Bluetooth RC Car app
+Simple robotic control from "Bluetooth RC Car" app on Android
 
 ## Using "Arduino Bluetooth RC Car" application for Android, implement basic teleoperation of a robot:
   * TS 100 Tank Base
